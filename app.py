@@ -38,11 +38,8 @@ async def on_stopping(event: StoppingEvent) -> None:
 
 
 def create_ping_server():
-    port = 18000
     handler_object = SimpleHTTPRequestHandler
-    my_server = socketserver.TCPServer(("", port), handler_object)
-
-    print("serving at port:" + str(port))
+    my_server = socketserver.TCPServer(("", os.getenv('PING_PORT')), handler_object)
     my_server.serve_forever()
 
 # Run the bot
