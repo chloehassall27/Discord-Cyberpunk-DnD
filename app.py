@@ -18,7 +18,7 @@ bot = lightbulb.BotApp(token=os.getenv('DISCORD_TOKEN'), intents=intents)
 
 @bot.listen()
 async def on_starting(event: StartingEvent) -> None:
-    bot.d.mongoClient = pymongo.MongoClient(os.getenv('DB_CONNSTR'),
+    bot.d.mongoClient = pymongo.MongoClient(os.getenv('CUSTOMCONNSTR_DATABASE'),
                                             tls=True,
                                             tlsAllowInvalidCertificates=True)
     bot.d.db = bot.d.mongoClient["originalServer"]
