@@ -1,5 +1,7 @@
 import os
-
+from http.server import HTTPServer, SimpleHTTPRequestHandler
+import socketserver
+import threading
 import dotenv
 import lightbulb
 import pymongo
@@ -35,9 +37,17 @@ async def on_stopping(event: StoppingEvent) -> None:
     await bot.d.mongoClient.close()
 
 
+def create_ping_server():
+    port = 18000
+    handler_object = SimpleHTTPRequestHandler
+    my_server = socketserver.TCPServer(("", port), handler_object)
+
+    print("serving at port:" + str(port))
+    my_server.serve_forever()
 
 # Run the bot
 # Note that this is blocking meaning no code after this line will run
 # until the bot is shut off
 if __name__ == "__main__":
+    threading.Thread(target=create_ping_server).start()
     bot.run()
