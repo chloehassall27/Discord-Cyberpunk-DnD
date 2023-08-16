@@ -18,11 +18,14 @@ bot = lightbulb.BotApp(token=os.getenv('DISCORD_TOKEN'), intents=intents)
 
 @bot.listen()
 async def on_starting(event: StartingEvent) -> None:
-    bot.d.mongoClient = pymongo.MongoClient("mongodb://localhost:27017/")
+    bot.d.mongoClient = pymongo.MongoClient(os.getenv('DB_CONNSTR'),
+                                            tls=True,
+                                            tlsAllowInvalidCertificates=True)
     bot.d.db = bot.d.mongoClient["originalServer"]
     bot.d.current_actions = bot.d.db["currentActions"]
     bot.d.players = bot.d.db["players"]
     bot.d.logs = bot.d.db["logs"]
+    print(bot.d.mongoClient.server_info())
     initDbHelper(bot)
     bot.load_extensions_from("./plugins/", must_exist=True)
 

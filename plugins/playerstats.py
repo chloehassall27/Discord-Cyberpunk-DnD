@@ -75,16 +75,14 @@ async def changeCol(ctx: lightbulb.Context) -> None:
 
 @plugin.command
 @lightbulb.add_checks(runOnOtherPlayers)
-@lightbulb.option("target", "The player whose income to change", hikari.Member, required=False)
-@lightbulb.command("stats", "Change the income of a player")  # , ephemeral=True
+@lightbulb.option("target", "(DM) The player whose stats you would like to view", hikari.Member, required=False)
+@lightbulb.command("stats", "View the stats of a player")  # , ephemeral=True
 # Define the command type(s) that this command implements
 @lightbulb.implements(lightbulb.SlashCommand)
 # Define the command's callback. The callback should take a single argument which will be
 # an instance of a subclass of lightbulb.context.Context when passed in
 async def stats(ctx: lightbulb.Context) -> None:
     target = ctx.options.target or ctx.member
-    # bot.d.players.update_one({"user_id": target.id}, {"$set": {"username": target.username, "display_name": target.display_name}}, upsert=True)
-    updatePlayerEntry(target)
     await ctx.respond(createUserStatsEmbed(target))
 
 
