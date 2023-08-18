@@ -20,10 +20,22 @@ async def runOnOtherPlayers(ctx: lightbulb.Context) -> bool:
 
 
 @lightbulb.Check
-async def dmOnly(ctx: lightbulb.Context) -> bool:
+async def isDM(ctx: lightbulb.Context) -> bool:
+    if(ctx.member.id in bot.d.config.get("admins")):
+        return True
+    
     for role in ctx.member.get_roles():
-        if role.name == "DMs":
+        if role.name == bot.d.config.get("dm_role"):
             return True
+    else:
+        await ctx.respond("You do not have permission to run this command.")
+        return False
+
+
+@lightbulb.Check
+async def isAdmin(ctx: lightbulb.Context) -> bool:
+    if(ctx.member.id in bot.d.config.get("admins")):
+        return True
     else:
         await ctx.respond("You do not have permission to run this command.")
         return False

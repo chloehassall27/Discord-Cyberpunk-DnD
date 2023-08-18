@@ -11,7 +11,7 @@ from pytz import timezone
 from plugins.jobs import workJob
 from plugins.playerstats import createUserStatsEmbed, chargeCOL
 from util.db import updatePlayerEntry
-from util.permissions import runOnOtherPlayers, dmOnly
+from util.permissions import runOnOtherPlayers, isDM
 from util.playerchecks import isAI
 
 plugin = lightbulb.Plugin("Schedules")
@@ -126,7 +126,7 @@ def createUserScheduleEmbed(user: hikari.Member, updated=False) -> hikari.Embed:
 
 
 @plugin.command
-@lightbulb.add_checks(dmOnly)
+@lightbulb.add_checks(isDM)
 @lightbulb.option("player", "Name of a specific player to cause a new day for", hikari.Member, required=False)
 @lightbulb.command("execute-day", "Update players' stats")
 @lightbulb.implements(lightbulb.SlashCommand)

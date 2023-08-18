@@ -5,11 +5,11 @@ from bson import Decimal128
 from api.unb import getMoney, updateMoney
 from util.config import config
 from util.db import updatePlayerEntry
-from util.permissions import runOnOtherPlayers, dmOnly
+from util.permissions import runOnOtherPlayers, isDM
 
 plugin = lightbulb.Plugin("Stats")
 
-currencySymbol = config.get('currencySymbol')
+currencySymbol = config.get('currency_symbol')
 
 
 def chargeCOL(member: hikari.Member, count=1) -> int:
@@ -59,7 +59,7 @@ def createUserStatsEmbed(member: hikari.Member) -> hikari.Embed:
 
 
 @plugin.command
-@lightbulb.add_checks(dmOnly)
+@lightbulb.add_checks(isDM)
 @lightbulb.option("target", "The player whose cost of living to change", hikari.Member, required=True)
 @lightbulb.option("amount", "The cost per one human maintenance session (typically once charged every day)", int, required=True)
 @lightbulb.command("change-col", "Change the cost of living of a player")  # , ephemeral=True
