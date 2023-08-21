@@ -4,8 +4,9 @@
 
 - To SSH into the server, `ssh -i ".\bot-vm_key.pem" cyberpunk@20.246.94.220`
 - The server files are available in `/home/cyberpunk/server`
-- If needed, install the requirements with `pip install -r requirements.txt`
-- Launch the server with `python3 app.py`
+- The server utilizes systemd and should be started on startup after networking has started
+- To restart the server, use `sudo systemctl restart dnd-bot.service`
+- To view the server console, use `journalctl -f -u dnd-bot.service`
 
 ## Development
 
