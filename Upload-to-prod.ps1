@@ -38,7 +38,6 @@ $session = New-Object WinSCP.Session -Property @{
 $transferOptions = New-Object WinSCP.TransferOptions
 $transferOptions.FileMask = "*.py; $PSScriptRoot/resources/*; $PSScriptRoot/requirements.txt; $PSScriptRoot/prefs.json"
 $transferOptions.AddRawSettings("ExcludeEmptyDirectories", "1")
-# $transferOptions.FileMask = "*.py"
 
 try
 {
