@@ -6,7 +6,7 @@ import lightbulb
 from api.unb import updateMoney
 from util.config import config
 from util.db import updatePlayerEntry
-from util.permissions import dmOnly
+from util.permissions import isDM
 
 plugin = lightbulb.Plugin("Jobs")
 
@@ -22,8 +22,8 @@ def workJob(member: hikari.Member, count=1):
 
 
 @plugin.command
-@lightbulb.add_checks(dmOnly)
-@lightbulb.option("income", "The " + config.get('currencySymbol') + " amount per 8hrs of work", int, required=False)
+@lightbulb.add_checks(isDM)
+@lightbulb.option("income", "The " + config.get('currency_symbol') + " amount per 8hrs of work", int, required=False)
 @lightbulb.option("job-name", "Name of the job", str, required=False)
 @lightbulb.option("job-description", "Description of the job", str, required=False)
 @lightbulb.option("job-success-rate", "% of the time player gets paid (ex. 75 means 3/4 working periods pay out)", int, required=False)
@@ -48,7 +48,7 @@ async def changeJob(ctx: lightbulb.Context) -> None:
             await ctx.respond("Income must be >= 0")
             return
         if income > 0 and not (name or prev_name):
-            await ctx.respond("Must include job name if income is > " + config.get('currencySymbol') + "0")
+            await ctx.respond("Must include job name if income is > " + config.get('currency_symbol') + "0")
             return
         if income == 0 and not name:
             updatePlayerEntry(ctx.options.target, "job.name", "")
